@@ -1,35 +1,45 @@
 /*
-Assignment 2, Q1
+Assignment 4
 Author: Cameron Bauman
-Date: 01/23/2023
-Purpose: Calculate and print all prime numbers between 0 and 10,000 using if-else and while statements
+Date: 02/13/2023
+Purpose: Create a program that takes a string as an input and returns it in summary form. This will account for the different characters and number of their instances.
  */
-package assignment2;
+package assignment4;
+
+import java.util.Scanner;
 
 public class Q1 {
 
     public static void main(String[] args) {
 
-        int var = 2; // initialize variable to store value counting from 1 to 10000
+        Scanner sc = new Scanner(System.in); // Create scanner object
 
-        boolean primeNum; // declare boolean variable that determines true or false if it is prime number or not
+        System.out.println("Enter a string input to be summarized: ");  // prompt user
 
-        while (var <= 10000) {  // while loop that goes through the specified range of numbers
+        String input = sc.nextLine();    // Store user input
 
-            primeNum = true;  // assuume the number is prime until it is checked
-
-            for (int i = 2; i <= var / 2; i++) {   // This for loop will count through each possible divisor of the value of var. It only counts up until half of the value of var because its possible divisors would only be in that range.
-                if (var % i == 0) {                // If the remainder of var and the incrementing value equal 0, the value of primeNum = false and the loop is broken. 
-                    primeNum = false;              // This determines that the value of var is not a prime number
-                    break;
-                }
-            }
-
-            if (primeNum) {                        // If the value of primeNum is still true after checking for dvisiors with remainder 0 in the for loop, the value of var is printed  (it is a prime number)
-                System.out.println(var);
-            }
-            var++;                                 // The value of var is incremented after checking if it was a prime number or not
-        }
-        // This process repeats for each value of var from 2 to 10,000
+        System.out.println("The string in summary form is: " + stringSummary(input));  // Print result
     }
+
+    static String stringSummary(String input) {
+
+        StringBuilder sumStr = new StringBuilder();  // Create StringBuilder to append count values onto instances of characters in string
+
+        int counter = 1;       // declare index variable to count instances of characters
+
+        for (int i = 1; i < input.length(); i++) {  
+
+            if (input.charAt(i) == input.charAt(i - 1)) {   // if second element fo the string equals the previous element increment the counter
+                counter++;
+            } else {
+                sumStr.append(input.charAt(i - 1)).append(counter); // else, append the character of this instance and the counter value into the empty string
+                counter = 1;
+            }
+        }
+
+         sumStr.append(input.charAt(input.length() - 1)).append(counter); // for final case in input string, append the last instance character and its respective count if it wasn't accounted for in the for loop.
+
+        return sumStr.toString();
+    }
+
 }
